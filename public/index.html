@@ -44,9 +44,10 @@
       <div class='card container'>
         <h3>{{name}}</h3>
         <div class='weatherdata'><span>{{tempc}}C°/{{tempf}}F° on {{timeanddate}}</span></div>
+        <div class = 'comment' id = '{{name}}' ></div>
         <form>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Comment about the Weather in {{name}}" id="comment">
+            <input type="text" class="form-control" placeholder="Comment about the Weather in {{name}}" data-id="{{name}}">
             <div class="input-group-btn">
               <button class="btn btn-success get-weather" type="button">
                 Comments

@@ -13,7 +13,6 @@ var fetch = function() {
 };
 var cityArray = [];
 var commentsArray = [];
-
 // function createTemplate() {
 
 //   var newHTML = template({
@@ -29,32 +28,43 @@ function storeCity(data) {
     name: data.location.name,
     tempc: data.current.temp_c,
     tempf: data.current.temp_f,
-    timeanddate: data.location.localtime
+    timeanddate: data.location.localtime,
+    comments: []
   }
   cityArray.push(cityObject);
 };
 
-function storeComments() {
-  commentsArray.push(comment);
+function storeComments(comment, inputName) {
+  for (let i=0;i<cityArray.length;i++){
+    if (cityArray[i].name===inputName){
+      cityArray[i].comments.push(comment);
+      // console.log(cityArray);
+
+    }
+  }
 }
 
 
 var updateWeather = function() {
-    $('.append').contents().remove();
-    var source = $('#weatherinfo').html();
-    var template = Handlebars.compile(source);
-    for (let i = 0; i < cityArray.length; i++) {
-      let newHTML = template(cityArray[i]);
-      $('.append').append(newHTML);
+  $('.append').contents().remove();
+  var source = $('#weatherinfo').html();
+  var template = Handlebars.compile(source);
+  for (let i = 0; i < cityArray.length; i++) {
+    let newHTML = template(cityArray[i]);
+    $('.append').append(newHTML);
+    if(cityArray[i].comments){
+    for (let j=0;j<cityArray[i].comments.length;j++){
+      $('#name').append(cityArray[i].comments[j]);
     }
+  }
+  }
 }
 
 $('.get-weather').on('click', fetch);
-    // $('.append').on('click', '.btn-success', function() {
-    //   var comment = $(this).parent().siblings().val();
-    //
-    //
-    //   $(this).parents().find('.weatherdata').append('</br>' + comment);
-    //   // $('.weatherdata').append('#comment').val());
-    //
-    // });
+
+$('.append').on('click', '.btn-success', function() {
+  var comment = $(this).parent().siblings().val();
+  var inputName = $(this).parent().siblings().data().id;
+  storeComments(comment,inputName);
+  updateWeather();
+});
