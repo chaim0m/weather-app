@@ -35,8 +35,8 @@ function storeCity(data) {
 };
 
 function storeComments(comment, inputName) {
-  for (let i=0;i<cityArray.length;i++){
-    if (cityArray[i].name===inputName){
+  for (let i = 0; i < cityArray.length; i++) {
+    if (cityArray[i].name === inputName) {
       cityArray[i].comments.push(comment);
       // console.log(cityArray);
 
@@ -52,19 +52,33 @@ var updateWeather = function() {
   for (let i = 0; i < cityArray.length; i++) {
     let newHTML = template(cityArray[i]);
     $('.append').append(newHTML);
-    if(cityArray[i].comments){
-    for (let j=0;j<cityArray[i].comments.length;j++){
-      $('#name').append(cityArray[i].comments[j]);
+    if (cityArray[i].comments) {
+      for (let j = 0; j < cityArray[i].comments.length; j++) {
+        let temp = '#' + cityArray[i].name;
+        $(temp).append(cityArray[i].comments[j] + '</br>');
+      }
     }
-  }
   }
 }
 
+function handleKeyPress(e) {
+  var key = e.keyCode || e.which;
+  if (key == 13) {
+    searching();
+  }
+}
 $('.get-weather').on('click', fetch);
+$('.get-weather').on('keypress', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    fetch();
+  }
+});
+
 
 $('.append').on('click', '.btn-success', function() {
   var comment = $(this).parent().siblings().val();
   var inputName = $(this).parent().siblings().data().id;
-  storeComments(comment,inputName);
+  storeComments(comment, inputName);
   updateWeather();
 });
