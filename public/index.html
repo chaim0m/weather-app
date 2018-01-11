@@ -11,10 +11,20 @@
 </head>
 
 <body>
+  <div class = "text-right sort">
+    Sort by:
+    <select id = "sort">
+      <option value = "" selected>Select sorting method</option>
+      <option value = "City">City</option>
+      <option value = "Temperature">Temperature</option>
+      <option value = "Date">Date</option>
+    </select>
+  </div>
   <div class='top container'>
     <div class="row">
+
       <div class="col-12">
-        <h1>Weather Chat</h1>
+          <h1 class = "text-center">Weather Chat</h1>
         <form class="weather-form">
           <div class="input-group">
             <input type="text" class="form-control" required="true" placeholder="Search" id="city">
@@ -58,14 +68,14 @@
         <div class="input-group">
           <input type="text" required="true" class="form-control" placeholder="Comment about the Weather in {{name}}" data-id="{{name}}">
           <div class="input-group-btn">
-            <button class="btn btn-success get-weather" type="submit">
+            <button class="btn btn-success" type="submit">
                 Comments
               </button>
           </div>
         </div>
       </form>
-  </script>
-  <script type="text/javascript" src="api.js"></script>
+      </script>
+      <script type="text/javascript" src="api.js"></script>
 
 </body>
 

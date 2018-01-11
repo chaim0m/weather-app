@@ -23,3 +23,12 @@
 .remove{
   float: right;
 }
+h1{
+  color:blue;
+}
+.sort{
+  /* margin: 60px; */
+  padding-right:120px;
+  padding-top: 30px;
+  display: none;
+}

@@ -45,6 +45,7 @@ function storeCity(data) {
   }
   cityArray.push(cityObject);
   saveToLocalStorage();
+  showSort();
 };
 
 function storeComments(comment, inputName) {
@@ -92,8 +93,34 @@ $('.weather-form').on('submit', function(event){
 //     fetch();
 //   }
 // });
-
-
+function showSort(){
+  if (cityArray.length>1){
+    $(".sort").toggle();
+    return true;
+  }
+}
+function sort(){
+  if (showSort){
+    let tempArray = [];
+    let tempCityArray = [];
+    for(let i=0;i<cityArray.length;i++){
+      tempArray.push(cityArray[i].name)
+    }
+    tempArray.sort();
+    for (let i=0;i<tempArray.length;i++){
+      for(let j=0;i<cityArray.length;j++){
+        if (tempArray[i]===cityArray[j].name){
+          tempCityArray.push(cityArray[j])
+      }
+    }
+    }
+    cityArray = tempCityArray;
+    updateWeather();
+  }
+  else{
+    return;
+  }
+}
 $(".append").on("submit",".sabba", function(event) {
   event.preventDefault();
   var comment = $(this).find(".form-control").val();
@@ -110,5 +137,11 @@ $(".append").on("click", ".remove", function() {
   }
   saveToLocalStorage();
   updateWeather();
+});
+$("#sort").change(function(){
+  let selection = $("#sort").val()
+  if (selection==="City"){
+  sort();
+}
 });
 updateWeather();
