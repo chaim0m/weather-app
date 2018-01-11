@@ -3,7 +3,10 @@ var saveToLocalStorage = function() {
   localStorage.setItem(STORAGE_ID, JSON.stringify(cityArray));
 }
 
-// var LOAD_STORAGE = localStorage.getItem(STORAGE_ID);
+var LOAD_STORAGE = function(){
+  return JSON.parse(localStorage.getItem(STORAGE_ID)||"[]");
+
+}
 // load frim local stoarge parse it and save to cities cityArray
 // run function on page
 
@@ -21,7 +24,7 @@ var fetch = function() {
   });
 };
 var cityArray = [];
-var commentsArray = [];
+// var commentsArray = [];
 // function createTemplate() {
 
 //   var newHTML = template({
@@ -60,6 +63,7 @@ var updateWeather = function() {
   $('.append').contents().remove();
   var source = $('#weatherinfo').html();
   var template = Handlebars.compile(source);
+  cityArray = LOAD_STORAGE();
   for (let i = 0; i < cityArray.length; i++) {
     let newHTML = template(cityArray[i]);
     $('.append').append(newHTML);
@@ -90,10 +94,10 @@ $('.weather-form').on('submit', function(event){
 // });
 
 
-$('.append').on('submit', '.btn-success', function(event) {
+$(".append").on("submit",".sabba", function(event) {
   event.preventDefault();
-  var comment = $(this).parent().siblings().val();
-  var inputName = $(this).closest(".sabba").siblings("h3").text();
+  var comment = $(this).find(".form-control").val();
+  var inputName = $(this).siblings("h3").text();
   storeComments(comment, inputName);
   updateWeather();
 });
@@ -107,3 +111,4 @@ $(".append").on("click", ".remove", function() {
   saveToLocalStorage();
   updateWeather();
 });
+updateWeather();
