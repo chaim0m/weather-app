@@ -12,18 +12,28 @@
 
 <body>
   <div class='top container'>
-    <h1>Weather Chat</h1>
-    <form>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" id="city">
-        <div class="input-group-btn">
-          <button class="btn btn-primary get-weather" type="button">
+    <div class="row">
+      <div class="col-12">
+        <h1>Weather Chat</h1>
+        <form class="weather-form">
+          <div class="input-group">
+            <input type="text" class="form-control" required="true" placeholder="Search" id="city">
+            <div class="input-group-btn">
+              <button class="btn btn-primary get-weather" type="submit">
             Get Temp
           </button>
-        </div>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-    <!--
+    </div>
+    <div class="row">
+      <div class='append col-12'>
+        <hr style="border: 1px  color: #DFD1CD" />
+      </div>
+    </div>
+  </div>
+  <!--
 
   <form>
     <div class="input-group">
@@ -34,30 +44,28 @@
     </div>
   </form> -->
 
-    <div class='append'>
-      <hr style="border: 1px  color: #DFD1CD" />
-    </div>
-    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="handlebars/dist/handlebars.min.js"></script>
-    <script id="weatherinfo" type="text/x-handlebars-template">
-      <div class='card container'>
-        <h3>{{name}}</h3>
-        <div class='weatherdata'><span>{{tempc}}C°/{{tempf}}F° on {{timeanddate}}</span></div>
-        <div class = 'comment' id = '{{name}}' ></div>
-        <form>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Comment about the Weather in {{name}}" data-id="{{name}}">
-            <div class="input-group-btn">
-              <button class="btn btn-success get-weather" type="button">
+
+  <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="handlebars/dist/handlebars.min.js"></script>
+  <script id="weatherinfo" type="text/x-handlebars-template">
+    <div class='card'>
+      <button type="button" class="remove"><i class="fa fa-times" aria-hidden="true"></i></button>
+      <h3>{{name}}</h3>
+      <div class='weatherdata'><span>{{tempc}}C°/{{tempf}}F° on {{timeanddate}}</span></div>
+      <div class='comment' id='{{name}}'></div>
+      <form class="sabba">
+        <div class="input-group">
+          <input type="text" required="true" class="form-control" placeholder="Comment about the Weather in {{name}}" data-id="{{name}}">
+          <div class="input-group-btn">
+            <button class="btn btn-success get-weather" type="submit">
                 Comments
               </button>
-            </div>
           </div>
-        </form>
-    </script>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="api.js"></script>
+        </div>
+      </form>
+  </script>
+  <script type="text/javascript" src="api.js"></script>
 
 </body>
 

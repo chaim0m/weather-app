@@ -1,7 +1,16 @@
+var STORAGE_ID = 'weatherdata';
+var saveToLocalStorage = function() {
+  localStorage.setItem(STORAGE_ID, JSON.stringify(cityArray));
+}
+
+// var LOAD_STORAGE = localStorage.getItem(STORAGE_ID);
+// load frim local stoarge parse it and save to cities cityArray
+// run function on page
+
 var fetch = function() {
   $.ajax({
     method: "GET",
-    url: 'http://api.apixu.com/v1/current.json?key=6d760d3f69ec408b9c481849180701&q=' + $('#city').val() + '&appid=6d760d3f69ec408b9c481849180701',
+    url: 'http://api.apixu.com/v1/current.json?key=6d760d3f69ec408b9c481849180701&q=' + $('#city').val(),
     success: function(data) {
       storeCity(data);
       updateWeather();
@@ -32,6 +41,7 @@ function storeCity(data) {
     comments: []
   }
   cityArray.push(cityObject);
+  saveToLocalStorage();
 };
 
 function storeComments(comment, inputName) {
@@ -39,6 +49,7 @@ function storeComments(comment, inputName) {
     if (cityArray[i].name === inputName) {
       cityArray[i].comments.push(comment);
       // console.log(cityArray);
+      saveToLocalStorage();
 
     }
   }
@@ -61,24 +72,38 @@ var updateWeather = function() {
   }
 }
 
-function handleKeyPress(e) {
-  var key = e.keyCode || e.which;
-  if (key == 13) {
-    searching();
-  }
-}
-$('.get-weather').on('click', fetch);
-$('.get-weather').on('keypress', function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    fetch();
-  }
-});
+// function handleKeyPress(e) {
+//   var key = e.keyCode || e.which;
+//   if (key == 13) {
+//     searching();
+//   }
+// }
+$('.weather-form').on('submit', function(event){
+  event.preventDefault();
+  fetch();
+})
+// $('.get-weather').on('keypress', function(event) {
+//   if (event.keyCode === 13) {
+//     event.preventDefault();
+//     fetch();
+//   }
+// });
 
 
-$('.append').on('click', '.btn-success', function() {
+$('.append').on('submit', '.btn-success', function(event) {
+  event.preventDefault();
   var comment = $(this).parent().siblings().val();
-  var inputName = $(this).parent().siblings().data().id;
+  var inputName = $(this).closest(".sabba").siblings("h3").text();
   storeComments(comment, inputName);
+  updateWeather();
+});
+$(".append").on("click", ".remove", function() {
+  let rem = $(this).siblings("h3").text();
+  for (let i=0;i<cityArray.length;i++){
+    if (cityArray[i].name==rem){
+      cityArray.splice(i,1);
+    }
+  }
+  saveToLocalStorage();
   updateWeather();
 });
